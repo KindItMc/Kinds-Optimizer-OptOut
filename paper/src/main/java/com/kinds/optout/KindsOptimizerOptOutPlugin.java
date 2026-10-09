@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -39,8 +40,19 @@ public final class KindsOptimizerOptOutPlugin extends JavaPlugin implements List
     }
 
     private byte[] reason() {
-        return getConfig()
-                .getString("disconnect-reason", "This server does not allow Kind's optimizer mods.")
-                .getBytes(StandardCharsets.UTF_8);
+        String reason = getConfig().getString("disconnect-reason", "This server does not allow Kind's optimizer mods.");
+        byte[] bytes = reason.getBytes(StandardCharsets.UTF_8);
+        ByteArrayOutputStream out = new ByteArrayOutputStream(bytes.length + 3);
+        writeVarInt(out, bytes.length);
+        out.writeBytes(bytes);
+        return out.toByteArray();
+    }
+
+    private void writeVarInt(ByteArrayOutputStream out, int value) {
+        while ((value & -128) != 0) {
+            out.write(value & 127 | 128);
+            value >>>= 7;
+        }
+        out.write(value);
     }
 }

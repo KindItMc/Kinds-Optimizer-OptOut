@@ -1,5 +1,5 @@
 name: KindsOptimizerOptOut
-version: 1.0.2
+version: 1.0.3
 main: com.kinds.optout.KindsOptimizerOptOutPlugin
 api-version: '1.21'
 author: KinditMc
