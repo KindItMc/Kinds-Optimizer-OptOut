@@ -5,7 +5,7 @@ Server opt out for Kind's client optimizer mods.
 ## Downloads
 
 Paper, Spigot, Purpur:
-`release/Kinds-Optimizer-OptOut-Paper-1.0.1.jar`
+`release/Kinds-Optimizer-OptOut-Paper-1.0.2.jar`
 
 Fabric:
 Build from the Fabric folder with Gradle.
@@ -14,6 +14,7 @@ Build from the Fabric folder with Gradle.
 
 Paper, Spigot, Purpur:
 Put the Paper jar in your server `plugins` folder.
+Works on 1.21 through 1.26.2 Bukkit based servers.
 
 Fabric:
 Put the Fabric jar in your server `mods` folder.
