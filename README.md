@@ -34,7 +34,8 @@ Reserved for crystal support:
 `kindscrystaloptimizer:handshake`
 `kindscrystaloptimizer:opt_out`
 
-Kind's Anchor Optimizer and Kind's Crystal Optimizer need the new client builds with opt out receivers.
+Use Kind's Anchor Optimizer 0.3.0 or newer.
+Use Kind's Crystal Optimizer 1.6.3 or newer.
 
 ## Config
 
