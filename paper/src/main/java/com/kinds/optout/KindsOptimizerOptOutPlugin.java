@@ -2,44 +2,45 @@ package com.kinds.optout;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
-public final class KindsOptimizerOptOutPlugin extends JavaPlugin implements Listener {
-    private static final byte[] EMPTY = new byte[0];
-    private static final List<String> CHANNELS = List.of(
-            "kinds_anchor_optimizer:opt_out",
-            "kinds_crystal_optimizer:opt_out",
-            "kindscrystaloptimizer:opt_out"
+public final class KindsOptimizerOptOutPlugin extends JavaPlugin implements Listener, PluginMessageListener {
+    private static final Map<String, String> CHANNELS = Map.of(
+            "kinds_anchor_optimizer:handshake", "kinds_anchor_optimizer:opt_out",
+            "kinds_crystal_optimizer:handshake", "kinds_crystal_optimizer:opt_out",
+            "kindscrystaloptimizer:handshake", "kindscrystaloptimizer:opt_out"
     );
 
     @Override
     public void onEnable() {
-        for (String channel : CHANNELS) {
+        saveDefaultConfig();
+        for (String channel : CHANNELS.values()) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, channel);
+        }
+        for (String channel : CHANNELS.keySet()) {
+            getServer().getMessenger().registerIncomingPluginChannel(this, channel, this);
         }
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        sendOptOut(player);
-        Bukkit.getScheduler().runTaskLater(this, () -> sendOptOut(player), 20L);
-        Bukkit.getScheduler().runTaskLater(this, () -> sendOptOut(player), 60L);
-    }
-
-    private void sendOptOut(Player player) {
-        if (!player.isOnline()) {
+    @Override
+    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+        String out = CHANNELS.get(channel);
+        if (out == null || !player.isOnline()) {
             return;
         }
 
-        for (String channel : CHANNELS) {
-            player.sendPluginMessage(this, channel, EMPTY);
-        }
+        player.sendPluginMessage(this, out, reason());
+    }
+
+    private byte[] reason() {
+        return getConfig()
+                .getString("disconnect-reason", "This server does not allow Kind's optimizer mods.")
+                .getBytes(StandardCharsets.UTF_8);
     }
 }

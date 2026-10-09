@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "kinds_optimizer_optout",
-  "version": "1.0.0",
-  "name": "Kind's Optimizer Opt-Out",
-  "description": "Server-side opt-out for Kind's client optimizer mods.",
+  "version": "1.0.1",
+  "name": "Kind's Optimizer Opt Out",
+  "description": "Server opt out for Kind's client optimizer mods.",
   "authors": ["KinditMc"],
   "license": "All Rights Reserved",
   "environment": "server",

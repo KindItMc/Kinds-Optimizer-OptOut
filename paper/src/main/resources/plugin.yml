@@ -1,6 +1,6 @@
 name: KindsOptimizerOptOut
-version: 1.0.0
+version: 1.0.1
 main: com.kinds.optout.KindsOptimizerOptOutPlugin
 api-version: '1.21'
 author: KinditMc
-description: Server opt-out for Kind's client optimizer mods.
+description: Server opt out for Kind's client optimizer mods.

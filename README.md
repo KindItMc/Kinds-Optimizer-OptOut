@@ -1,14 +1,14 @@
-# Kind's Optimizer Opt-Out
+# Kind's Optimizer Opt Out
 
-Server-side opt-out for Kind's client optimizer mods.
+Server opt out for Kind's client optimizer mods.
 
 ## Downloads
 
 Paper, Spigot, Purpur:
-`release/Kinds-Optimizer-OptOut-Paper-1.0.0.jar`
+`release/Kinds-Optimizer-OptOut-Paper-1.0.1.jar`
 
 Fabric:
-`release/Kinds-Optimizer-OptOut-Fabric-1.0.0.jar`
+Build from the Fabric folder with Gradle.
 
 ## Install
 
@@ -21,14 +21,27 @@ Fabric API is required.
 
 ## What it does
 
-When a player joins, the server sends opt-out messages for Kind's optimizer mods.
+When a Kind's optimizer mod sends its handshake, the server sends back an opt out message.
+The client mod disconnects itself with the server reason.
 
 Supported now:
+`kinds_anchor_optimizer:handshake`
 `kinds_anchor_optimizer:opt_out`
 
 Reserved for crystal support:
+`kinds_crystal_optimizer:handshake`
 `kinds_crystal_optimizer:opt_out`
+`kindscrystaloptimizer:handshake`
 `kindscrystaloptimizer:opt_out`
 
-Kind's Anchor Optimizer already supports server opt-out.
-Kind's Crystal Optimizer needs a client-side opt-out receiver before those crystal channels can disable it.
+Kind's Anchor Optimizer and Kind's Crystal Optimizer need the new client builds with opt out receivers.
+
+## Config
+
+Paper:
+`plugins/KindsOptimizerOptOut/config.yml`
+
+Fabric:
+`config/kinds_optimizer_optout.properties`
+
+Set the disconnect reason there.
