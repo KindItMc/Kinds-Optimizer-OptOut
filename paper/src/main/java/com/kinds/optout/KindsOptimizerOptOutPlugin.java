@@ -3,10 +3,13 @@ package com.kinds.optout;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -24,7 +27,7 @@ public final class KindsOptimizerOptOutPlugin extends JavaPlugin implements List
             getServer().getMessenger().registerOutgoingPluginChannel(this, channel);
         }
         for (String channel : CHANNELS.keySet()) {
-            getServer().getMessenger().registerIncomingPluginChannel(this, channel, this);
+            registerIncoming(channel);
         }
         Bukkit.getPluginManager().registerEvents(this, this);
     }
@@ -54,5 +57,15 @@ public final class KindsOptimizerOptOutPlugin extends JavaPlugin implements List
             value >>>= 7;
         }
         out.write(value);
+    }
+
+    private void registerIncoming(String channel) {
+        try {
+            Messenger messenger = getServer().getMessenger();
+            Method method = messenger.getClass().getMethod("registerIncomingPluginChannel", org.bukkit.plugin.Plugin.class, String.class, PluginMessageListener.class);
+            method.invoke(messenger, this, channel, this);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exception) {
+            throw new IllegalStateException("Could not register opt out channel " + channel, exception);
+        }
     }
 }
