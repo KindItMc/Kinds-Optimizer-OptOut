@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "kinds_optimizer_optout",
+  "version": "1.0.0",
+  "name": "Kind's Optimizer Opt-Out",
+  "description": "Server-side opt-out for Kind's client optimizer mods.",
+  "authors": ["KinditMc"],
+  "license": "All Rights Reserved",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "com.kinds.optout.KindsOptimizerOptOutMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": ">=1.21"
+  }
+}
